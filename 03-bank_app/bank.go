@@ -2,7 +2,14 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
+
+// Function to save and update accountBalance in a file,
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	os.WriteFile("balance.txt", []byte(balanceText), 0644)
+}
 
 func main() {
 	// Balance
@@ -51,6 +58,7 @@ func main() {
 			}
 
 			accountBalance += depositAmount
+			writeBalanceToFile(accountBalance)
 
 			fmt.Printf("Your new balance is: %.2f", accountBalance)
 
@@ -78,6 +86,7 @@ func main() {
 			}
 
 			accountBalance -= withdrawAmount
+			writeBalanceToFile(accountBalance)
 
 			// Print divider
 			fmt.Println(`- - - - - - - - - - - - - - - -`)
