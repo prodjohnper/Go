@@ -25,10 +25,11 @@ func main() {
 	earningsBeforeTax := revenue - expenses
 	fmt.Println(earningsBeforeTax)
 
+	// Calculate earnings after tax
 	earningsAfterTax := earningsBeforeTax * (1 - taxRate/100)
 	fmt.Println(earningsAfterTax)
 
-	// Ratio
+	// Calculate ratio
 	ratio := earningsBeforeTax / earningsAfterTax
 	fmt.Println(ratio)
 }
