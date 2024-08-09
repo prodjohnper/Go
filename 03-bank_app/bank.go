@@ -1,19 +1,51 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
+	"strconv"
 )
+
+const accountBalanceFile = "balance.txt"
+
+// Function to get balance from file
+func getBalanceFromFile() (float64, error) {
+	// Read data from file
+	data, err := os.ReadFile(accountBalanceFile)
+
+	if err != nil {
+		return 0, errors.New("Account balance couldn't be retrieved, try again later.")
+	}
+
+	// Convert data to string
+	balanceText := string(data)
+	balance, err := strconv.ParseFloat(balanceText, 64)
+
+	if err != nil {
+		return 0, errors.New("An error has ocurred while parsing data, try again later")
+	}
+
+	// Return balance for latter use
+	return balance, nil
+}
 
 // Function to save and update accountBalance in a file,
 func writeBalanceToFile(balance float64) {
 	balanceText := fmt.Sprint(balance)
-	os.WriteFile("balance.txt", []byte(balanceText), 0644)
+	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
 }
 
 func main() {
 	// Balance
-	var accountBalance float64 = 1000.00
+	var accountBalance, err = getBalanceFromFile()
+
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		// Print divider
+		fmt.Println(`- - - - - - - - - - - - - - - -`)
+	}
 
 	// Output greeting message
 	fmt.Println("Welcome to Go Bank!")
@@ -96,7 +128,7 @@ func main() {
 			fmt.Println("Thanks for using our services! See you soon!")
 			break
 		} else {
-			fmt.Println("Invalid selection, try again.")
+			fmt.Print("Invalid selection, try again.")
 		}
 		// Print divider
 		fmt.Printf("\n")
