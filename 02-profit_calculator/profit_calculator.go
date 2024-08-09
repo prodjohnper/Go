@@ -5,31 +5,38 @@ import (
 )
 
 func main() {
-	var revenue float64
-	var expenses float64
-	var taxRate float64
+	revenue := getUserInput("Revenue: ")   // Revenue
+	expenses := getUserInput("Expenses: ") // Expenses
+	taxRate := getUserInput("Tax rate: ")  // Tax rate
 
-	// Revenue
-	fmt.Print("Enter revenue: ")
-	fmt.Scan(&revenue)
+	// Print divider
+	fmt.Println(`- - - - - - - - - - - - - - - -`)
 
-	// Expenses
-	fmt.Print("Enter expenses: ")
-	fmt.Scan(&expenses)
+	// Calculate earnings before/after tax and ratio
+	earningsBeforeTax, earningsAfterTax, ratio :=
+		calculateFinancials(revenue, expenses, taxRate)
 
-	// Tax rate
-	fmt.Print("Enter tax rate: ")
-	fmt.Scan(&taxRate)
+	// EBT, profit and ratio calculation results
+	fmt.Printf("EBT: %.2f\n", earningsBeforeTax)
+	fmt.Printf("Profit: %.2f\n", earningsAfterTax)
+	fmt.Printf("Ratio: %.2f\n", ratio)
+}
 
-	// Calculate earnings before tax
+// Function that gets user input and sets pointer to respective variable
+func getUserInput(text string) float64 {
+	var userInput float64
+
+	fmt.Print(text)
+	fmt.Scan(&userInput)
+
+	return userInput
+}
+
+// Function that calculates EBT, profit and ratio
+func calculateFinancials(revenue, expenses, taxRate float64) (float64, float64, float64) {
 	earningsBeforeTax := revenue - expenses
-	fmt.Println(earningsBeforeTax)
-
-	// Calculate earnings after tax
 	earningsAfterTax := earningsBeforeTax * (1 - taxRate/100)
-	fmt.Println(earningsAfterTax)
-
-	// Calculate ratio
 	ratio := earningsBeforeTax / earningsAfterTax
-	fmt.Println(ratio)
+
+	return earningsBeforeTax, earningsAfterTax, ratio
 }
