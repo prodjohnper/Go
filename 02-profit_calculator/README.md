@@ -6,4 +6,5 @@
 
 ### I learned how to:
 
-
+- Build a `profit calculator`
+- Calculate `EBT` (earnings before tax), `profit` (earnings after tax), and `ratio` (between `ebt` and `profit`)
